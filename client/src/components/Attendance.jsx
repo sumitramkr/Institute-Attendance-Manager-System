@@ -1,32 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Attendance() {
-  const [attendanceMarking, setAttendanceMarking] = React.useState({
+  const [attendanceMarking, setAttendanceMarking] = useState({
     cell1: 1,
   });
 
-  function PresentChange(event) {
-    console.log(event.target.value);
+  function Change(event) {
+    let value = event.target.value;
 
     setAttendanceMarking((attendanceMarking) => {
       return {
         ...attendanceMarking,
-        cell1: 1,
+        cell1: value,
       };
     });
-    console.log(attendanceMarking);
   }
 
-  function AbsentChange(event) {
-    console.log(event.target.value);
-    setAttendanceMarking((attendanceMarking) => {
-      return {
-        ...attendanceMarking,
-        cell1: 0,
-      };
-    });
-    console.log(attendanceMarking);
-  }
+  //   function AbsentChange(event) {
+  //     let absentValue = event.target.value;
+  //     setAttendanceMarking((attendanceMarking) => {
+  //       return {
+  //         ...attendanceMarking,
+  //         cell1: absentValue,
+  //       };
+  //     });
+  //     console.log(attendanceMarking);
+  //   }
 
   return (
     <div>
@@ -40,8 +39,8 @@ function Attendance() {
             id="present"
             name="attendance"
             value="1"
-            checked
-            onChange={PresentChange}
+            checked={attendanceMarking.cell1 === 1}
+            onChange={Change}
           />
           <label for="present">Present</label>
 
@@ -50,12 +49,16 @@ function Attendance() {
             id="absent"
             name="attendance"
             value="0"
-            onChange={AbsentChange}
+            checked={attendanceMarking.cell1 === 0}
+            onChange={Change}
           />
           <label for="absent">Absent</label>
 
           <button type="submit">Submit</button>
         </form>
+        <p>
+          Selected <strong>{attendanceMarking.cell1}</strong>
+        </p>
       </div>
     </div>
   );

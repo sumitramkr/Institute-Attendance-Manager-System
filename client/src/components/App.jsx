@@ -1,5 +1,12 @@
+import React from "react";
+import Attendance from "./Attendance";
+
 function App() {
-  return <div>React App</div>;
+  return (
+    <div>
+      <Attendance />
+    </div>
+  );
 }
 
 export default App;

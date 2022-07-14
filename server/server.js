@@ -1,31 +1,30 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const { google } = require("googleapis");
 
-// app.get("/attendance", (req, res) => {
-//   res.send("Successfully Done!");
-// });
+app.use(cors());
+app.use(express.json());
 
-app.post("/attendance", async (req, res) => {
-  //change to app.post
-  const auth = new google.auth.GoogleAuth({
-    keyFile: "credentials.json",
-    scopes: "https://www.googleapis.com/auth/spreadsheets",
-  });
+const auth = new google.auth.GoogleAuth({
+  keyFile: "credentials.json",
+  scopes: "https://www.googleapis.com/auth/spreadsheets",
+});
 
-  //create client instance for auth
-  const client = await auth.getClient();
+//create client instance for auth
+const client = auth.getClient();
 
-  //instance of google sheets api
-  const googleSheets = google.sheets({ version: "v4", auth: client });
+//instance of google sheets api
+const googleSheets = google.sheets({ version: "v4", auth: client });
 
-  const spreadsheetId = "12lYYEnZ_153eNamvaC-1Q4QGvKhfPksDkOu4PlpijKA";
-  //get metadata about spreadsheets
-  const metaData = await googleSheets.spreadsheets.get({
-    auth,
-    spreadsheetId,
-  });
+const spreadsheetId = "12lYYEnZ_153eNamvaC-1Q4QGvKhfPksDkOu4PlpijKA";
+//get metadata about spreadsheets
+const metaData = googleSheets.spreadsheets.get({
+  auth,
+  spreadsheetId,
+});
 
+app.get("/getAttendanceList", async (req, res) => {
   //read rows from spreadsheets
   const getRows = await googleSheets.spreadsheets.values.get({
     auth,
@@ -33,14 +32,22 @@ app.post("/attendance", async (req, res) => {
     range: "Trial1",
   });
 
+  res.send(getRows);
+});
+
+app.post("/attendance", async (req, res) => {
+  //change to app.post
+  console.log(req.body.attendanceMarking);
+  const caughtValue = req.body.attendanceMarking;
+
   //write rows to spreadsheets
   await googleSheets.spreadsheets.values.update({
     auth,
     spreadsheetId,
-    range: "Trial1!C8:C13",
+    range: "Trial1!C14",
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: [[0], [0], [0], [0], [0], [0]], //each [] inside values [] represent multiple rows
+      values: [[caughtValue]], //each [] inside values [] represent multiple rows
     },
   });
 

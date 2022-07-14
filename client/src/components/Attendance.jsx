@@ -1,31 +1,25 @@
 import React, { useState } from "react";
+import Axios from "axios";
 
 function Attendance() {
-  const [attendanceMarking, setAttendanceMarking] = useState({
-    cell1: 1,
+  const [Attedanceist, setAttedanceList] = useState([]);
+  const [attendanceMarking, setAttendanceMarking] = useState("1");
+
+  Axios.get("http://localhost:9000/getAttendanceList").then((response) => {
+    console.log(response);
   });
 
-  function Change(event) {
+  function changeValue(event) {
     let value = event.target.value;
+    // console.log([value]);
 
-    setAttendanceMarking((attendanceMarking) => {
-      return {
-        ...attendanceMarking,
-        cell1: value,
-      };
-    });
+    setAttendanceMarking(value);
+    // console.log(attendanceMarking);
   }
 
-  //   function AbsentChange(event) {
-  //     let absentValue = event.target.value;
-  //     setAttendanceMarking((attendanceMarking) => {
-  //       return {
-  //         ...attendanceMarking,
-  //         cell1: absentValue,
-  //       };
-  //     });
-  //     console.log(attendanceMarking);
-  //   }
+  function sendAllValues() {
+    Axios.post("http://localhost:9000/attendance", { attendanceMarking });
+  }
 
   return (
     <div>
@@ -39,8 +33,8 @@ function Attendance() {
             id="present"
             name="attendance"
             value="1"
-            checked={attendanceMarking.cell1 === 1}
-            onChange={Change}
+            checked={attendanceMarking === "1"}
+            onChange={changeValue}
           />
           <label for="present">Present</label>
 
@@ -49,15 +43,17 @@ function Attendance() {
             id="absent"
             name="attendance"
             value="0"
-            checked={attendanceMarking.cell1 === 0}
-            onChange={Change}
+            checked={attendanceMarking === "0"}
+            onChange={changeValue}
           />
           <label for="absent">Absent</label>
 
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={sendAllValues}>
+            Submit
+          </button>
         </form>
         <p>
-          Selected <strong>{attendanceMarking.cell1}</strong>
+          Selected <strong>{attendanceMarking}</strong>
         </p>
       </div>
     </div>

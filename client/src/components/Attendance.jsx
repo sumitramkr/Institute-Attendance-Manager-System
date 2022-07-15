@@ -33,13 +33,13 @@ function Attendance() {
   // }
 
   function changeValue(event) {
+    let { name, value } = event.target;
     setAttedanceList([
       attedanceList.map((items) => {
-        let { name, value } = event.target;
         if (items[0] === name) {
-          return [items[0], items[1], (items[2] = value)];
+          return [...attedanceList, [items[0], items[1], (items[2] = value)]];
         } else {
-          return [items[0], items[1], items[2]];
+          return [...attedanceList, [items[0], items[1], items[2]]];
         }
       }),
     ]);

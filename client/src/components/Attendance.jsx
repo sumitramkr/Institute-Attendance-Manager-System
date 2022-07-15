@@ -3,7 +3,7 @@ import Axios from "axios";
 
 function Attendance() {
   const [attedanceList, setAttedanceList] = useState([]);
-  const [attendanceMarking, setAttendanceMarking] = useState([]);
+  // const [attendanceMarking, setAttendanceMarking] = useState([]);
 
   Axios.get("http://localhost:9000/attendance").then((response) => {
     setAttedanceList(response.data.data.values);
@@ -21,7 +21,7 @@ function Attendance() {
   // }
 
   function sendAllValues() {
-    Axios.post("http://localhost:9000/attendance", { attendanceMarking });
+    Axios.post("http://localhost:9000/attendance", { attedanceList });
   }
 
   return (
@@ -61,11 +61,6 @@ function Attendance() {
       <button type="submit" onClick={sendAllValues}>
         Submit
       </button>
-      <div>
-        <p>
-          Selected <strong>{attendanceMarking}</strong>
-        </p>
-      </div>
     </form>
   );
 }

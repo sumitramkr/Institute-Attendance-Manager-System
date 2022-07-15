@@ -27,12 +27,17 @@ function Attendance() {
 
   return (
     <form>
+      <div>
+        {attedanceList[0][0]}
+        {attedanceList[0][1]}
+        {attedanceList[0][2]}
+      </div>
       {attedanceList.map((val, index) => {
-        if (index !== 0) {
-          let present = "present" + index;
-          return (
+        let present = "present" + index;
+        return (
+          index !== 0 && (
             <div key={index}>
-              {val[0]} {val[1]}
+              {val[0]} {val[1]} {val[2]}
               <input
                 type="checkbox"
                 id={present}
@@ -43,8 +48,8 @@ function Attendance() {
               />
               <label for={present}>Attendance</label>
             </div>
-          );
-        }
+          )
+        );
       })}
       <button type="submit" onClick={sendAllValues}>
         Submit

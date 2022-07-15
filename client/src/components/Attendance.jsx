@@ -41,7 +41,7 @@ function Attendance() {
                   name={attendance}
                   value="1"
                   checked={val[2] === "1"}
-                  onChange={(val[2] = "1")}
+                  onChange={() => (val[2] = "1")}
                 />
                 <label for={present}>Present</label>
                 <input
@@ -50,7 +50,7 @@ function Attendance() {
                   name={attendance}
                   value="0"
                   checked={val[2] === "0"}
-                  onChange={(val[2] = "0")}
+                  onChange={() => (val[2] = "0")}
                 />
                 <label for={absent}>Absent</label>
               </div>

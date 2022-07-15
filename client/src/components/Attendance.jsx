@@ -3,15 +3,15 @@ import Axios from "axios";
 
 function Attendance() {
   const [attedanceList, setAttedanceList] = useState([]);
-  const [attendanceMarking, setAttendanceMarking] = useState([]);
+  // const [attendanceMarking, setAttendanceMarking] = useState([]);
 
   Axios.get("http://localhost:9000/attendance").then((response) => {
     setAttedanceList(response.data.data.values);
-    setAttendanceMarking(
-      response.data.data.values.map((items) => {
-        return [items[0], items[2]];
-      })
-    );
+    // setAttendanceMarking(
+    //   response.data.data.values.map((items) => {
+    //     return [items[0], items[2]];
+    //   })
+    // );
   });
   // console.log(attendanceMarking);
 
@@ -36,11 +36,9 @@ function Attendance() {
     let { name, value } = event.target;
     setAttedanceList([
       attedanceList.map((items) => {
-        if (items[0] === name) {
-          return [...attedanceList, [items[0], items[1], (items[2] = value)]];
-        } else {
-          return [...attedanceList, [items[0], items[1], items[2]]];
-        }
+        return items[0] === name
+          ? [...attedanceList, [items[0], items[1], (items[2] = value)]]
+          : [...attedanceList, [items[0], items[1], items[2]]];
       }),
     ]);
     // console.log(attendanceMarking);

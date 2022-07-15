@@ -36,17 +36,22 @@ app.get("/attendance", async (req, res) => {
 });
 
 app.post("/attendance", async (req, res) => {
-  console.log(req.body.attendanceMarking);
-  const caughtValue = req.body.attendanceMarking;
+  const caughtValue = req.body.attedanceList;
+  let states = [[]];
+  caughtValue.map((items, index) => {
+    const newList = [...caughtValue];
+    states[index] = [newList[index][2]];
+  });
+  console.log(states);
 
   //write rows to spreadsheets
   await googleSheets.spreadsheets.values.update({
     auth,
     spreadsheetId,
-    range: "Trial1!C14",
+    range: "Trial1!C:C",
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: [[caughtValue]], //each [] inside values [] represent multiple rows
+      values: states, //each [] inside values [] represent multiple rows
     },
   });
 

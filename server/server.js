@@ -24,7 +24,7 @@ const metaData = googleSheets.spreadsheets.get({
   spreadsheetId,
 });
 
-app.get("/getAttendanceList", async (req, res) => {
+app.get("/attendance", async (req, res) => {
   //read rows from spreadsheets
   const getRows = await googleSheets.spreadsheets.values.get({
     auth,

@@ -3,23 +3,22 @@ import Axios from "axios";
 
 function Attendance() {
   const [attedanceList, setAttedanceList] = useState([]);
-  const [attendanceMarking, setAttendanceMarking] = useState({
-    present1: "1",
-  });
+  const [attendanceMarking, setAttendanceMarking] = useState([]);
 
   Axios.get("http://localhost:9000/attendance").then((response) => {
     setAttedanceList(response.data.data.values);
   });
+  // console.log(attedanceList);
 
-  function changeValue(event) {
-    let { name, value } = event.target;
-    // console.log(event.target);
+  // function changeValue(event) {
+  //   let { name, value } = event.target;
+  //   // console.log(event.target);
 
-    setAttendanceMarking((attendanceMarking) => {
-      return { ...attendanceMarking, [name]: value };
-    });
-    console.log(attendanceMarking);
-  }
+  //   setAttendanceMarking((attendanceMarking) => {
+  //     return [...attendanceMarking, value];
+  //   });
+  //   // console.log(attendanceMarking);
+  // }
 
   function sendAllValues() {
     Axios.post("http://localhost:9000/attendance", { attendanceMarking });
@@ -32,7 +31,6 @@ function Attendance() {
           let attendance = "attendance" + index;
           let present = "present" + index;
           let absent = "absent" + index;
-
           return (
             <div key={index}>
               <div>
@@ -42,8 +40,8 @@ function Attendance() {
                   id={present}
                   name={attendance}
                   value="1"
-                  checked={attendanceMarking === "1"}
-                  onChange={changeValue}
+                  checked={val[2] === "1"}
+                  onChange={(val[2] = "1")}
                 />
                 <label for={present}>Present</label>
                 <input
@@ -51,8 +49,8 @@ function Attendance() {
                   id={absent}
                   name={attendance}
                   value="0"
-                  checked={attendanceMarking === "0"}
-                  onChange={changeValue}
+                  checked={val[2] === "0"}
+                  onChange={(val[2] = "0")}
                 />
                 <label for={absent}>Absent</label>
               </div>

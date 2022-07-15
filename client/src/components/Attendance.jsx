@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
 function Attendance() {
   const [attedanceList, setAttedanceList] = useState([]);
 
-  Axios.get("http://localhost:9000/attendance").then((response) => {
-    setAttedanceList(response.data.data.values);
-  });
+  useEffect(() => {
+    Axios.get("http://localhost:9000/attendance").then((response) => {
+      setAttedanceList(response.data.data.values);
+    });
+  }, []);
 
   function changeValue(event, index) {
     const checked = event.target.checked;
+
     setAttedanceList((attedanceList) => {
       const newAttedanceList = [...attedanceList];
       newAttedanceList[index][2] = checked ? "1" : "0";
@@ -17,8 +20,9 @@ function Attendance() {
     });
   }
 
-  function sendAllValues() {
+  function sendAllValues(event) {
     Axios.post("http://localhost:9000/attendance", { attedanceList });
+    event.preventDefault();
   }
 
   return (

@@ -36,7 +36,6 @@ app.get("/attendance", async (req, res) => {
 });
 
 app.post("/attendance", async (req, res) => {
-  //change to app.post
   console.log(req.body.attendanceMarking);
   const caughtValue = req.body.attendanceMarking;
 

@@ -12,20 +12,6 @@ function Attendance() {
     });
   }, []);
 
-  function changeValue(event, index) {
-    const checked = event.target.checked;
-
-    setAttedanceList((attedanceList) => {
-      const newAttedanceList = [...attedanceList];
-      newAttedanceList[index][2] = checked ? "1" : "0";
-      return newAttedanceList;
-    });
-  }
-
-  function marking(val) {
-    return val == 1 ? "Present" : "Absent";
-  }
-
   function sendAllValues(event) {
     Axios.post("http://localhost:9000/attendance", { attedanceList });
     event.preventDefault();
@@ -34,15 +20,11 @@ function Attendance() {
   return (
     <form>
       <TableTitle />
-      <Pagination
-        data={attedanceList}
-        changeValue={changeValue}
-        marking={marking}
-      />
-      <div className="submit-btn">
+      <Pagination data={attedanceList} />
+      <div className="submit-btn d-grid gap-2 d-md-flex justify-content-md-center">
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn btn-lg btn-primary"
           onClick={sendAllValues}
         >
           Submit

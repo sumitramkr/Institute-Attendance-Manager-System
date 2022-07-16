@@ -9,15 +9,26 @@ function Pagination(props) {
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 10;
 
+  function marking(val) {
+    return val == 1 ? "Present" : "Absent";
+  }
+
   useEffect(() => {
-    // Fetch items from another resources.
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    const endOffset = itemOffset + itemsPerPage + 1;
     setCurrentItems(props.data.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(props.data.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, props.data]);
 
-  // Invoke when user click to request another page.
+  function changeValue(event, index) {
+    const checked = event.target.checked;
+
+    setCurrentItems((currentItems) => {
+      const newAttedanceList = [...currentItems];
+      newAttedanceList[index][2] = checked ? "1" : "0";
+      return newAttedanceList;
+    });
+  }
+
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % props.data.length;
     setItemOffset(newOffset);
@@ -42,10 +53,10 @@ function Pagination(props) {
                     name={present}
                     value={val[1]}
                     checked={val[2] === "1"}
-                    onChange={(event) => props.changeValue(event, index)}
+                    onChange={(event) => changeValue(event, index)}
                   />
                   <label className="form-check-label" for={present}>
-                    {props.marking([val[2]])}
+                    {marking([val[2]])}
                   </label>
                 </div>
               </div>

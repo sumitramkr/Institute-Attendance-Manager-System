@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import TableTitle from "./TableTitle";
+import Pagination from "./Pagination";
 
 function Attendance() {
   const [attedanceList, setAttedanceList] = useState([]);
@@ -33,31 +34,11 @@ function Attendance() {
   return (
     <form>
       <TableTitle />
-      {attedanceList.map((val, index) => {
-        let present = "present" + index;
-        if (index !== 0) {
-          return (
-            <div key={index} className="row">
-              <div className="col-lg-3 col-md-3 col-sm-3">{val[0]}</div>
-              <div className="col-lg-3 col-md-3 col-sm-3">{val[1]}</div>
-              <div className="col-lg-3 col-md-3 col-sm-3">
-                {marking([val[2]])}
-              </div>
-              <div className="col-lg-3 col-md-3 col-sm-3">
-                <input
-                  type="checkbox"
-                  id={present}
-                  name={present}
-                  value={val[1]}
-                  checked={val[2] === "1"}
-                  onChange={(event) => changeValue(event, index)}
-                />
-                <label for={present}>Attendance</label>
-              </div>
-            </div>
-          );
-        }
-      })}
+      <Pagination
+        data={attedanceList}
+        changeValue={changeValue}
+        marking={marking}
+      />
       <div className="submit-btn">
         <button
           type="submit"

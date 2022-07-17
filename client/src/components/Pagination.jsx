@@ -8,7 +8,7 @@ function Pagination(props) {
   const itemsPerPage = 10;
 
   function marking(val) {
-    return val == 1 ? "Present" : "Absent";
+    return val[0] === "1" ? "Present" : "Absent";
   }
 
   useEffect(() => {

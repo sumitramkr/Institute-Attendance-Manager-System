@@ -57,8 +57,9 @@ async function createSheet() {
   ).data;
 }
 
+checker === 1 && createSheet();
+
 app.get("/attendance", async (req, res) => {
-  createSheet();
   //read rows from spreadsheets
   const getRows = await googleSheets.spreadsheets.values.get({
     auth,
@@ -71,14 +72,13 @@ app.get("/attendance", async (req, res) => {
 
 app.post("/attendance", async (req, res) => {
   const caughtValue = req.body.attedanceList;
-  // console.log(caughtValue);
   let states = [[]];
   let newList = [[]];
   caughtValue.map((items, index) => {
     newList = [...caughtValue];
     states[index] = [newList[index][2]];
   });
-  // console.log(newList);
+  console.log(newList);
 
   //write rows to spreadsheets
   await googleSheets.spreadsheets.values.update({
@@ -87,7 +87,7 @@ app.post("/attendance", async (req, res) => {
     range: sheetNameDate,
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: newList, //each [] inside values [] represent multiple rows
+      values: newList,
     },
   });
 

@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -17,19 +18,49 @@ const client = auth.getClient();
 //instance of google sheets api
 const googleSheets = google.sheets({ version: "v4", auth: client });
 
-const spreadsheetId = "12lYYEnZ_153eNamvaC-1Q4QGvKhfPksDkOu4PlpijKA";
+const spreadsheetId = process.env.SPREADSHEET_ID;
+const templateSheetId = process.env.TEMPELATE_SHEET_ID;
 //get metadata about spreadsheets
 const metaData = googleSheets.spreadsheets.get({
   auth,
   spreadsheetId,
 });
 
+let date_ob = new Date();
+let date = ("0" + date_ob.getDate()).slice(-2);
+let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+let year = date_ob.getFullYear();
+let sheetNameDate = date + "-" + month + "-" + year;
+let sheetId = date + month + year + templateSheetId;
+
+async function createSheet() {
+  //creating duplicate sheet from template
+  const response = (
+    await googleSheets.spreadsheets.batchUpdate({
+      auth,
+      spreadsheetId,
+      resource: {
+        requests: [
+          {
+            duplicateSheet: {
+              sourceSheetId: templateSheetId,
+              newSheetId: sheetId,
+              newSheetName: sheetNameDate,
+            },
+          },
+        ],
+      },
+    })
+  ).data;
+}
+
 app.get("/attendance", async (req, res) => {
+  createSheet();
   //read rows from spreadsheets
   const getRows = await googleSheets.spreadsheets.values.get({
     auth,
     spreadsheetId,
-    range: "Trial1",
+    range: sheetNameDate,
   });
 
   res.send(getRows);
@@ -38,20 +69,21 @@ app.get("/attendance", async (req, res) => {
 app.post("/attendance", async (req, res) => {
   const caughtValue = req.body.attedanceList;
   let states = [[]];
+  let newList = [[]];
   caughtValue.map((items, index) => {
-    const newList = [...caughtValue];
+    newList = [...caughtValue];
     states[index] = [newList[index][2]];
   });
-  // console.log(states);
+  console.log(newList);
 
   //write rows to spreadsheets
   await googleSheets.spreadsheets.values.update({
     auth,
     spreadsheetId,
-    range: "Trial1!C:C",
+    range: sheetNameDate,
     valueInputOption: "USER_ENTERED",
     resource: {
-      values: states, //each [] inside values [] represent multiple rows
+      values: newList, //each [] inside values [] represent multiple rows
     },
   });
 

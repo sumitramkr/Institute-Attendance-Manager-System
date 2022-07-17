@@ -42,10 +42,13 @@ function Pagination(props) {
           if (index !== 0) {
             return (
               <div key={index} className="row">
-                <div className="col-lg-4 col-md-4 col-sm-4">{val[0]}</div>
-                <div className="col-lg-4 col-md-4 col-sm-4">{val[1]}</div>
+                <div className="col-lg-3 col-md-3 col-sm-3">
+                  {index + itemOffset}
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-3">{val[0]}</div>
+                <div className="col-lg-3 col-md-3 col-sm-3">{val[1]}</div>
 
-                <div className="col-lg-4 col-md-4 col-sm-4 form-check">
+                <div className="col-lg-3 col-md-3 col-sm-3 form-check">
                   <input
                     className="form-check-input"
                     type="checkbox"

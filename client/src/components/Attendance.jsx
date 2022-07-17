@@ -15,7 +15,7 @@ function Attendance() {
   function sendAllValues(event) {
     console.log("Reached Till post React");
     Axios.post("http://localhost:9000/attendance", { attedanceList });
-    event.preventDefault();
+    // event.preventDefault();
   }
 
   return (

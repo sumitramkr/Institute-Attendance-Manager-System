@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import TableTitle from "./TableTitle";
 import Pagination from "./Pagination";
+import "./styles.css";
 
 function Attendance() {
   const [attedanceList, setAttedanceList] = useState([]);
@@ -19,7 +20,7 @@ function Attendance() {
   }
 
   return (
-    <form>
+    <form className="form-body">
       <TableTitle />
       <Pagination data={attedanceList} />
       <div className="submit-btn d-grid gap-2 d-md-flex justify-content-md-center">

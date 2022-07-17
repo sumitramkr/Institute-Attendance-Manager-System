@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
+import "./styles.css";
 
 function Pagination(props) {
   const [currentItems, setCurrentItems] = useState([]);
@@ -37,16 +38,20 @@ function Pagination(props) {
       <div>
         {currentItems.map((val, index) => {
           let present = "present" + index;
-          if (index !== 0) {
-            return (
+          return (
+            index !== 0 && (
               <div key={index} className="row">
-                <div className="col-lg-3 col-md-3 col-sm-3">
+                <div className="col-lg-3 col-md-3 col-sm-3 check-line center-col">
                   {index + itemOffset}
                 </div>
-                <div className="col-lg-3 col-md-3 col-sm-3">{val[0]}</div>
-                <div className="col-lg-3 col-md-3 col-sm-3">{val[1]}</div>
+                <div className="col-lg-3 col-md-3 col-sm-3 check-line center-col">
+                  {val[0]}
+                </div>
+                <div className="col-lg-3 col-md-3 col-sm-3 check-line center-col">
+                  {val[1]}
+                </div>
 
-                <div className="col-lg-3 col-md-3 col-sm-3 form-check">
+                <div className="col-lg-3 col-md-3 col-sm-3 form-check check-line center-col">
                   <input
                     className="form-check-input"
                     type="checkbox"
@@ -61,8 +66,8 @@ function Pagination(props) {
                   </label>
                 </div>
               </div>
-            );
-          }
+            )
+          );
         })}
       </div>
       <ReactPaginate

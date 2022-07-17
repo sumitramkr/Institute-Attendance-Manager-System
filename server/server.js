@@ -16,6 +16,7 @@ const auth = new google.auth.GoogleAuth({
 const client = auth.getClient();
 
 //instance of google sheets api
+// const sheets = google.sheets('v4');
 const googleSheets = google.sheets({ version: "v4", auth: client });
 
 const spreadsheetId = process.env.SPREADSHEET_ID;
@@ -31,9 +32,11 @@ let date = ("0" + date_ob.getDate()).slice(-2);
 let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
 let year = date_ob.getFullYear();
 let sheetNameDate = date + "-" + month + "-" + year;
-let sheetId = date + month + year + templateSheetId;
+let sheetId = date + month + year;
+let checker = 0;
 
 async function createSheet() {
+  checker = 1;
   //creating duplicate sheet from template
   const response = (
     await googleSheets.spreadsheets.batchUpdate({
@@ -68,13 +71,14 @@ app.get("/attendance", async (req, res) => {
 
 app.post("/attendance", async (req, res) => {
   const caughtValue = req.body.attedanceList;
+  // console.log(caughtValue);
   let states = [[]];
   let newList = [[]];
   caughtValue.map((items, index) => {
     newList = [...caughtValue];
     states[index] = [newList[index][2]];
   });
-  console.log(newList);
+  // console.log(newList);
 
   //write rows to spreadsheets
   await googleSheets.spreadsheets.values.update({

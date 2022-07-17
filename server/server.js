@@ -57,7 +57,7 @@ async function createSheet() {
   ).data;
 }
 
-checker === 1 && createSheet();
+createSheet();
 
 app.get("/attendance", async (req, res) => {
   //read rows from spreadsheets

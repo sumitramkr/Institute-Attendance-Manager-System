@@ -78,7 +78,6 @@ app.post("/attendance", async (req, res) => {
     newList = [...caughtValue];
     states[index] = [newList[index][2]];
   });
-  console.log(newList);
 
   //write rows to spreadsheets
   await googleSheets.spreadsheets.values.update({

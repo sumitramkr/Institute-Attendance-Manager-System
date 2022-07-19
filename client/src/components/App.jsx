@@ -7,9 +7,10 @@ function App() {
   let [val2, setVal2] = useState("0");
   let [secName, setSecName] = useState("");
   let [goAttendance, setGoAttendance] = useState(0);
+  let [home, setHome] = useState(0);
   return (
     <div>
-      {goAttendance === 0 && (
+      {(goAttendance === 0 || home === 1) && (
         <CreateColumn
           val1={val1}
           val2={val2}
@@ -18,13 +19,15 @@ function App() {
           secName={secName}
           setSecName={setSecName}
           setGoAttendance={setGoAttendance}
+          setHome={setHome}
         />
       )}
-      {goAttendance === 1 && (
+      {goAttendance === 1 && home === 0 && (
         <Attendance
           secName={secName}
           goAttendance={goAttendance}
           setSecName={setSecName}
+          setHome={setHome}
         />
       )}
     </div>

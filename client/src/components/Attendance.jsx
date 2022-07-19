@@ -4,7 +4,7 @@ import TableTitle from "./TableTitle";
 import Pagination from "./Pagination";
 import "./styles.css";
 
-function Attendance({ secName, setSecName }) {
+function Attendance({ secName, setSecName, setHome }) {
   const [attedanceList, setAttedanceList] = useState([]);
 
   useEffect(() => {
@@ -16,9 +16,12 @@ function Attendance({ secName, setSecName }) {
   }, []);
 
   function sendAllValues(event) {
-    console.log("Reached Till post React");
     Axios.post("http://localhost:9000/attendance" + secName, { attedanceList });
-    // event.preventDefault();
+    event.preventDefault();
+  }
+
+  function sentToHome() {
+    setHome(1);
   }
 
   return (
@@ -32,6 +35,13 @@ function Attendance({ secName, setSecName }) {
           onClick={sendAllValues}
         >
           Submit
+        </button>
+        <button
+          type="submit"
+          className="btn btn-lg btn-danger"
+          onClick={sentToHome}
+        >
+          Home
         </button>
       </div>
     </form>

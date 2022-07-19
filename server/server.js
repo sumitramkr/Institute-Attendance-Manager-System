@@ -134,8 +134,8 @@ app.post("/createColumn", async (req, res) => {
             range: {
               sheetId: currentSectionId,
               dimension: "COLUMNS",
-              startIndex: 3,
-              endIndex: 4,
+              startIndex: 2,
+              endIndex: 3,
             },
           },
         },
@@ -146,7 +146,7 @@ app.post("/createColumn", async (req, res) => {
   await googleSheets.spreadsheets.values.update({
     auth,
     spreadsheetId,
-    range: sectionName + "!D1:D1",
+    range: sectionName + "!C1:C1",
     valueInputOption: "USER_ENTERED",
     resource: {
       values: [[columnName]],

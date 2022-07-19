@@ -11,6 +11,7 @@ function CreateColumn({
   goAttendance,
   setGoAttendance,
   setSecName,
+  setHome,
 }) {
   let date_obj = new Date();
   let date = ("0" + date_obj.getDate()).slice(-2);
@@ -49,6 +50,7 @@ function CreateColumn({
 
   function sendColumn(event) {
     setGoAttendance(1);
+    setHome(0);
     Axios.post("http://localhost:9000/createColumn", { secName, goAttendance });
 
     // console.log(secName);

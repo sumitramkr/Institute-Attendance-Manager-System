@@ -64,8 +64,8 @@ function CreateColumn({
 
   return (
     <div>
-      <h2>CS102: Introduction to Data Structures</h2>
-      <h3>{showDate}</h3>
+      <h2 className="createPage">CS102: Introduction to Data Structures</h2>
+      <h3 className="createPage">{showDate}</h3>
       <form className="form-body">
         <div className="form-check check-line center-col">
           <input

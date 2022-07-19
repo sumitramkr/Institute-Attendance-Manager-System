@@ -17,6 +17,18 @@ h2 {
   font-size: 2.5rem;
 }
 
+h2.createPage {
+  margin-top: 10rem;
+  display: flex;
+  justify-content: space-around;
+}
+
+h3.createPage {
+  margin: 5rem 0rem 5rem;
+  display: flex;
+  justify-content: space-around;
+}
+
 .center-row {
   background-color: #ecb390;
 }

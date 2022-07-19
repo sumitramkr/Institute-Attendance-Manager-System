@@ -4,18 +4,20 @@ import TableTitle from "./TableTitle";
 import Pagination from "./Pagination";
 import "./styles.css";
 
-function Attendance() {
+function Attendance({ secName, setSecName }) {
   const [attedanceList, setAttedanceList] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:9000/attendance").then((response) => {
-      setAttedanceList(response.data.data.values);
-    });
+    Axios.get("http://localhost:9000/attendance/" + secName).then(
+      (response) => {
+        setAttedanceList(response.data.data.values);
+      }
+    );
   }, []);
 
   function sendAllValues(event) {
     console.log("Reached Till post React");
-    Axios.post("http://localhost:9000/attendance", { attedanceList });
+    Axios.post("http://localhost:9000/attendance" + secName, { attedanceList });
     // event.preventDefault();
   }
 

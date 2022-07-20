@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import "./styles.css";
 
 function Pagination(props) {
   const [currentItems, setCurrentItems] = useState([]);

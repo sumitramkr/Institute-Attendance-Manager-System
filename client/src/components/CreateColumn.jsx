@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Axios from "axios";
-import "./styles.css";
 
 function CreateColumn({
   val1,

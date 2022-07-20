@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import TableTitle from "./TableTitle";
 import Pagination from "./Pagination";
-import "./styles.css";
 
 function Attendance({ secName, setHome }) {
   const [attedanceList, setAttedanceList] = useState([]);

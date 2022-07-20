@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Attendance from "./Attendance";
 import CreateColumn from "./CreateColumn";
+import "./styles.css";
 
 function App() {
   let [val1, setVal1] = useState("0");

@@ -4,7 +4,7 @@ import TableTitle from "./TableTitle";
 import Pagination from "./Pagination";
 import "./styles.css";
 
-function Attendance({ secName, setSecName, setHome }) {
+function Attendance({ secName, setHome }) {
   const [attedanceList, setAttedanceList] = useState([]);
 
   useEffect(() => {

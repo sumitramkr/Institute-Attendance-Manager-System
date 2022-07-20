@@ -18,7 +18,6 @@ const auth = new google.auth.GoogleAuth({
 const client = auth.getClient();
 
 //instance of google sheets api
-// const sheets = google.sheets('v4');
 const googleSheets = google.sheets({ version: "v4", auth: client });
 
 const spreadsheetId = process.env.SPREADSHEET_ID;
@@ -35,30 +34,6 @@ let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
 let year = date_ob.getFullYear();
 let columnName = date + "-" + month + "-" + year;
 
-// async function createSheet() {
-//   checker = 1;
-//   //creating duplicate sheet from template
-//   const response = (
-//     await googleSheets.spreadsheets.batchUpdate({
-//       auth,
-//       spreadsheetId,
-//       resource: {
-//         requests: [
-//           {
-//             duplicateSheet: {
-//               sourceSheetId: templateSheetId,
-//               newSheetId: sheetId,
-//               newSheetName: columnName,
-//             },
-//           },
-//         ],
-//       },
-//     })
-//   ).data;
-// }
-
-// createSheet();
-
 async function main() {
   const request = {
     auth,
@@ -70,14 +45,8 @@ async function main() {
   return responseSheet;
 }
 
-// app.get("/createColumn", async (req, res) => {
-//   // let sName = "";
-//   res.send(response.sheets[0].properties.sheetId);
-// });
-
 app.post("/createColumn", async (req, res) => {
   let sectionName = req.body.secName;
-  // console.log(sectionName + " " + req.body.goAttendance);
   let currentSectionId = 0;
   let responseSheet = await main();
   let findSheets = [...responseSheet.sheets];
@@ -88,41 +57,6 @@ app.post("/createColumn", async (req, res) => {
       currentSectionId = item.properties.sheetId;
     }
   });
-
-  // let responseSheetId = await googleSheets.spreadsheets.get({
-  //   auth: client,
-  //   spreadsheetId,
-  //   ranges: sectionName,
-  //   includeGridData: false,
-  // });
-
-  // console.log(responseSheetId.data.sheets[0].properties.sheetId);
-  // await googleSheets.spreadsheets.batchUpdate({
-  //   auth,
-  //   spreadsheetId,
-  //   resource: {
-  //     requests: [
-  //       {
-  //         copyPaste: {
-  //           source: {
-  //             sheetId: sheetId,
-  //             startRowIndex: 0,
-  //             startColumnIndex: 2,
-  //             endColumnIndex: 3,
-  //           },
-  //           destination: {
-  //             sheetId: sheetId,
-  //             startRowIndex: 0,
-  //             startColumnIndex: 3,
-  //             endColumnIndex: 3,
-  //           },
-  //           pasteType: "PASTE_NORMAL",
-  //           pasteOrientation: "NORMAL",
-  //         },
-  //       },
-  //     ],
-  //   },
-  // });
 
   await googleSheets.spreadsheets.batchUpdate({
     auth,
@@ -153,18 +87,7 @@ app.post("/createColumn", async (req, res) => {
     },
   });
 
-  // await googleSheets.spreadsheets.values.update({
-  //   auth,
-  //   spreadsheetId,
-  //   range: sectionName + "!D2:D306",
-  //   valueInputOption: "USER_ENTERED",
-  //   resource: {
-  //     values: [[0]],
-  //   },
-  // });
-
   let attedanceBool = req.body.goAttendance;
-  // console.log(attedanceBool);
   if (attedanceBool) {
     findSheets.map((item) => {
       if (item.properties.title === sectionName) {
@@ -177,20 +100,7 @@ app.post("/createColumn", async (req, res) => {
 });
 
 app.get("/attendance/:topic", async (req, res) => {
-  // console.log(postValue);
   let param = req.params.topic;
-  // console.log(param);
-  // let findSheets = postValue.findSheets;
-  // console.log(req.query);
-  // let secName = postValue.secName;
-
-  // let currentSectionName = "";
-
-  // findSheets.map((item) => {
-  //   if (item.properties.title === sectionName) {
-  //     currentSectionName = item.properties.title;
-  //   }
-  // });
   //read rows from spreadsheets
   const getRows = await googleSheets.spreadsheets.values.get({
     auth,

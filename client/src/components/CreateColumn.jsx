@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Axios from "axios";
 import "./styles.css";
 
@@ -18,12 +18,6 @@ function CreateColumn({
   let month = ("0" + (date_obj.getMonth() + 1)).slice(-2);
   let year = date_obj.getFullYear();
   let showDate = date + "-" + month + "-" + year;
-
-  //   let [val1, setVal1] = useState("0");
-  //   let [val2, setVal2] = useState("0");
-  //   let [secName, setSecName] = useState("");
-  //   let [goAttendance, setGoAttendance] = useState(0);
-
   function valueChanged(event) {
     const checkChecked = event.target.id;
     // console.log(checkChecked);
@@ -52,15 +46,7 @@ function CreateColumn({
     setGoAttendance(1);
     setHome(0);
     Axios.post("http://localhost:9000/createColumn", { secName, goAttendance });
-
-    // console.log(secName);
-    //event.preventDefault();
   }
-
-  //   function goForAttendance(event) {
-  //     if (event.target) {
-  //     }
-  //   }
 
   return (
     <div>
